@@ -12,7 +12,7 @@ export default function AddProduct() {
   const[image1, setImage1] = useState("");
   const[image2, setImage2] = useState("");
   const [description, setDescription] = useState("");
-
+  
   const addProductHandler = async () => {
     try {
       const product = {
@@ -84,7 +84,7 @@ export default function AddProduct() {
       <br />
       
       <button onClick={addProductHandler}>Add Product</button>
-      <DisplayProduct/>
+      {/* <DisplayProduct/> */}
     </div>
   );
 }
