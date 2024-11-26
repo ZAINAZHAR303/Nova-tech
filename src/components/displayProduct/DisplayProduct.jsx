@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/router";
 
 import { useEffect, useState } from "react";
 import { db } from "../../../config/firebase";
@@ -7,10 +8,14 @@ import Slider from "react-slick"; // Import React Slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function DisplayProduct() {
-  const [products, setProducts] = useState([]); // State to hold the fetched products
+export default function DisplayProduct({onUpdateHandle}) {
+  const [products, setProducts] = useState([]);
 
-  
+  // State to hold the fetched products
+ 
+
+
+
   const getProducts = async () => {
     try {
       const collectionRef = collection(db, "products");
@@ -49,7 +54,7 @@ export default function DisplayProduct() {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-    
+
   };
 
   return (
@@ -99,6 +104,11 @@ export default function DisplayProduct() {
             onClick={() => onDeleteHandler(item.id)}
             className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
             Delete
+          </button>
+          <button
+            onClick={()=>onUpdateHandle(item)}
+            className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+            update
           </button>
         </div>
       ))}
