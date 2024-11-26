@@ -19,3 +19,31 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+.slick-slider {
+  .slick-prev,
+  .slick-next {
+    z-index: 1;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .slick-prev {
+    left: 20px;
+    opacity: 70%;
+  }
+
+  .slick-next {
+    opacity: 70%;
+    right: 20px;
+  }
+  .slick-prev
+  .slick-next:hover{
+    opacity: 100%;
+  }
+  .slick-prev::before,
+  .slick-next::before {
+    
+    font-size: 30px;
+    color: #d2d2d2;
+  }
+}
