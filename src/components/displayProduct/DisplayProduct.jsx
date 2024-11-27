@@ -10,6 +10,14 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function DisplayProduct({onUpdateHandle,cartHandle}) {
   const [products, setProducts] = useState([]);
+  const[Loginitem,setLoginItem] =useState(null)
+
+  useEffect(() => {
+    const storedLogin = localStorage.getItem("selectedItem for login");
+    if (storedLogin) {
+      setLoginItem(JSON.parse(storedLogin));
+    }
+  }, []);
 
   // State to hold the fetched products
 
@@ -98,16 +106,22 @@ export default function DisplayProduct({onUpdateHandle,cartHandle}) {
           </p>
 
           {/* Delete Button */}
-          <button
-            onClick={() => onDeleteHandler(item.id)}
-            className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-            Delete
-          </button>
-          <button
-            onClick={()=>onUpdateHandle(item)}
-            className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-            update
-          </button>
+          {
+            Loginitem? <div>
+            <button
+              onClick={() => onDeleteHandler(item.id)}
+              className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+              Delete
+            </button>
+            <button
+              onClick={()=>onUpdateHandle(item)}
+              className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
+              update
+            </button>
+            
+            </div>
+          :null  
+          }
           <button onClick={()=>cartHandle(item)} className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-red-700">Add to Cart</button>
         </div>
       ))}
