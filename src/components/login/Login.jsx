@@ -30,7 +30,7 @@ export default function Login({onClose}) {
         user.password
       );
       
-      console.log("userLogin", userCredential.user.uid);
+      
       localStorage.setItem(
         "selectedItem for login",
         JSON.stringify(userCredential.user.uid)

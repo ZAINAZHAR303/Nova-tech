@@ -94,7 +94,7 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
                   alt="Product Image 1"
                   style={{
                     transformOrigin: `${position.x}% ${position.y}%`,
-                    // transform: "scale(2)", // Adjust the zoom level here
+                    
                   }}
                 />
               </div>

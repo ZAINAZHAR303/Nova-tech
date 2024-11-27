@@ -30,12 +30,11 @@ export default function Home() {
   };
   // Function to handle data from child
   const cartHandle = (item) => {
-    console.log(item);
+    
     localStorage.setItem("selectedItem for cart", JSON.stringify(item));
   };
   const onUpdateHandle = (item) => {
-    console.log("item world");
-    console.log(item);
+    
     localStorage.setItem("selectedItem for Update", JSON.stringify(item));
     router.push("/updateProForm");
   };
