@@ -12,6 +12,7 @@ export default function Home() {
   const router = useRouter();
   const[addpro, setAddPro] = useState(false)
   const [message, setMessage] = useState("");
+  const[query,setquery] = useState("")
 
   // Function to handle data from child
   const cartHandle = (item) =>{
@@ -28,9 +29,9 @@ export default function Home() {
   return (
     <div className="  font-[family-name:var(--font-geist-sans)]">
      
-      <Navbar />
+      <Navbar setquery={setquery} />
       <ShopGrid />
-      <DisplayProduct onUpdateHandle={onUpdateHandle} cartHandle={cartHandle} />
+      <DisplayProduct onUpdateHandle={onUpdateHandle} cartHandle={cartHandle} query={query} />
       <button onClick={() => setAddPro(true)}>hello Product</button>
       {
         addpro && <AddProduct onClose={() => setAddPro(false)} />

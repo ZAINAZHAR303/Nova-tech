@@ -8,9 +8,19 @@ import Slider from "react-slick"; // Import React Slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function DisplayProduct({onUpdateHandle,cartHandle}) {
+export default function DisplayProduct({ onUpdateHandle, cartHandle,query}) {
   const [products, setProducts] = useState([]);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  const handleMouseMove = (e) => {
+    const { left, top, width, height } = e.target.getBoundingClientRect();
+    const x = ((e.clientX - left) / width) * 100; // Calculate x position as a percentage
+    const y = ((e.clientY - top) / height) * 100; // Calculate y position as a percentage
+    setPosition({ x, y });
+  };
+  const handleMouseLeave = () => {
+    setPosition({ x: 50, y: 50 }); // Reset to center (50% 50%)
+  };
   // State to hold the fetched products
 
   const getProducts = async () => {
@@ -38,7 +48,6 @@ export default function DisplayProduct({onUpdateHandle,cartHandle}) {
       console.error("Error deleting document:", error);
     }
   };
-  
 
   useEffect(() => {
     getProducts();
@@ -52,36 +61,49 @@ export default function DisplayProduct({onUpdateHandle,cartHandle}) {
     slidesToShow: 1,
     slidesToScroll: 1,
     arrows: true,
-
   };
 
   return (
     <div className="flex flex-col items-center justify-center mt-[20px]">
-      {products.map((item) => (
+      {products.filter((item) => item.name.toLowerCase().includes(query)).map((item) => (
         <div
           key={item.id}
-          className=" flex flex-col items-center justify-center w-full p-4 rounded-lg ">
+          className=" flex flex-col items-center justify-center w-full p-4 rounded-lg border-l-1 ">
           {/* React Slick Slider */}
-          <Slider {...sliderSettings} className="w-[400px] bg-green-200 mb-4 flex items-center justify-center">
-            <div className="custom-div">
+          <Slider
+            {...sliderSettings}
+            className="w-[400px]  mb-4 flex items-center justify-center">
+            <div className="custom-div image-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
               <img
                 src={item.image}
-                className=" custom-div object-cover"
+                className="zoom-image custom-div object-cover"
                 alt="Product Image 1"
+                style={{
+                  transformOrigin: `${position.x}% ${position.y}%`,
+                  // transform: "scale(2)", // Adjust the zoom level here
+                }}
               />
             </div>
-            <div className="custom-div">
+            <div className="custom-div image-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
               <img
                 src={item.image1}
-                className="custom-div object-cover"
+                className="zoom-image custom-div object-cover"
                 alt="Product Image 2"
+                style={{
+                  transformOrigin: `${position.x}% ${position.y}%`,
+                  // transform: "scale(2)", // Adjust the zoom level here
+                }}
               />
             </div>
-            <div className="custom-div">
+            <div className="custom-div image-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
               <img
                 src={item.image2}
-                className="custom-div bg-cover"
+                className="zoom-image custom-div bg-cover"
                 alt="Product Image 3"
+                style={{
+                  transformOrigin: `${position.x}% ${position.y}%`,
+                  // transform: "scale(2)", // Adjust the zoom level here
+                }}
               />
             </div>
           </Slider>
@@ -96,19 +118,25 @@ export default function DisplayProduct({onUpdateHandle,cartHandle}) {
           <p className="text-lg  font-semibold my-[8px] text-[#FF4545]">
             RS: {item.price}
           </p>
+          <button
+            onClick={() => cartHandle(item)}
+            className="mt-2 px-4 py-2 border-[0.5px] border-[#212121] text-[#212121] font-light rounded transform transition-transform transition-colors duration-300 ease-in-out hover:text-white hover:border-transparent hover:bg-red-500">
+            ADD TO CART
+          </button>
 
           {/* Delete Button */}
-          <button
-            onClick={() => onDeleteHandler(item.id)}
-            className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-            Delete
-          </button>
-          <button
-            onClick={()=>onUpdateHandle(item)}
-            className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
-            update
-          </button>
-          <button onClick={()=>cartHandle(item)} className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-red-700">Add to Cart</button>
+          <div className="flex gap-4  ">
+            <button
+              onClick={() => onDeleteHandler(item.id)}
+              className="mt-4 px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-red-600 hover:scale-105 hover:shadow-lg active:scale-95">
+              Delete
+            </button>
+            <button
+              onClick={() => onUpdateHandle(item)}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95">
+              Update
+            </button>
+          </div>
         </div>
       ))}
     </div>

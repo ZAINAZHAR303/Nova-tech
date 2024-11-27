@@ -2,7 +2,7 @@ import { CloseOutlined } from "@mui/icons-material";
 import React, { useEffect, useRef, useState } from "react";
 
 const CartProducts = ({ onClose }) => {
-  const[totalPrice,SetTotalPrice] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0);
   const [cartitems, setCartItems] = useState(() => {
     // Load initial cart items from localStorage
     const storedItems = localStorage.getItem("cartItems");
@@ -29,6 +29,11 @@ const CartProducts = ({ onClose }) => {
       });
     }
   }, []);
+  useEffect(() => {
+    // Calculate total price whenever cartitems changes
+    const newTotalPrice = cartitems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    setTotalPrice(newTotalPrice);
+  }, [cartitems]);
 
   const CloseModel = (e) => {
     if (modelref.current === e.target) {
@@ -40,31 +45,36 @@ const CartProducts = ({ onClose }) => {
     <div
       ref={modelref}
       onClick={CloseModel}
-      className="h-screen w-screen inset-0 fixed bg-[rgba(0,0,0,0.4)] flex items-center justify-center">
-      <div className="w-[320px] p-4 rounded-[10px] bg-white">
-        <CloseOutlined onClick={onClose} />
-        <h1 className="text-[20px] mb-[50px] ">Shopping Cart</h1>
+      className="h-screen w-screen inset-0 fixed bg-[rgba(0,0,0,0.4)] flex items-end justify-end">
+      <div className="w-[320px] h-screen  p-4  bg-white">
+        <CloseOutlined onClick={onClose} className=" absolute top-8 text-[40px] right-8" />
+        <h1 className="text-[20px] font-semibold text-[#2E2E2E]  my-[50px] ">Shopping Cart</h1>
         {cartitems.map((item) => (
-          <div key={item.id} className="flex items-center justify-between p-8">
-            <div className="h-[80px]flex items-center justify-center">
+          <div key={item.id} className="flex items-center justify-between border-[1px] rounded-lg   p-4 mb-4">
+            <div className="h-[80px] flex items-center justify-center">
               <img
                 src={item.image}
                 alt={item.name}
                 className="h-[80px] w-[80px]"
               />
-              <div className="flex flex-col ">
+              <div className="flex flex-col ml-4 gap-2 ">
                 <h1 className="text-[15px] font-medium ">{item.name}</h1>
-                <h1 className="text-[15px] font-medium text-[#FF4545]">
-                  {item.price}
+                <h1 className="text-[15px]  font-medium text-[#FF4545]">
+                  {item.price}  RS. 
 
                 </h1>
               </div>
             </div>
-            {/* {SetTotalPrice(item.price+totalPrice)
             
-            } */}
           </div>
         ))}
+        <div className="mt-12 flex items-center justify-between">
+          <h1 className="text-[20px] font-bold   ">Subtotal</h1>
+          <h2 className="text-[20px] font-bold">{totalPrice.toFixed(2)} RS.</h2>
+        </div>
+        <div>
+          <button className="w-full h-[40px] bg-[#212121] text-white font-medium mt-[20px] ">Checkout</button>
+        </div>
       </div>
     </div>
   );
