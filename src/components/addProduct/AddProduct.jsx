@@ -3,7 +3,7 @@
 import { useState,useRef } from "react";
 import { db } from "../../../config/firebase";
 import { collection, addDoc,deleteDoc } from "firebase/firestore"; // Import Firestore functions
-import DisplayProduct from "../displayProduct/DisplayProduct";
+
 import { CloseOutlined } from "@mui/icons-material";
 
 export default function AddProduct({ onClose }) {

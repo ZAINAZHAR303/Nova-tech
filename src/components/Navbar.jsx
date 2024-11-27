@@ -3,8 +3,8 @@ import { AccountCircleOutlined, LocalMallOutlined, Search, ViewWeek } from "@mui
 import React, { useState } from "react";
 import CartProducts from "./CartProducts";
 import Login from "./login/Login";
-import logo from "../app/assets/favicon.png"
-// import {logo} from "../assets/logo.jpg"
+
+
 const Navbar = ({setquery}) => {
   const [showCart, setShowCart] = useState(false);
   const [showSearch,setShowSearch] = useState(false)
@@ -37,7 +37,7 @@ const Navbar = ({setquery}) => {
           <AccountCircleOutlined onClick={()=>setLoginFun(!loginFun)} />
         <ViewWeek className="rotate-90 "   />
       </div>
-      {/* {showCart && <CartProducts onClose={() => setShowCart(false)} />} */}
+      
     </nav>
     {showCart && (
       <div className="absolute right-0 top-16 z-10">

@@ -7,7 +7,7 @@ import AddProduct from "@/components/addProduct/AddProduct";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-import Login from "@/components/login/Login";
+
 import { AddCircleOutlined, LogoutOutlined } from "@mui/icons-material";
 
 export default function Home() {

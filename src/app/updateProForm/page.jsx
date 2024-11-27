@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import Link from "next/link";
+
 import { useRouter } from "next/navigation";
 export default function OtherPage() {
   const [item, setItem] = useState(null);

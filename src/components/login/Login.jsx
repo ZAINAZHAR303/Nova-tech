@@ -3,8 +3,7 @@
 import { useRef, useState } from "react";
 import { auth } from "../../../config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import UserMessage from "../UserMessage";
-import { useRouter } from "next/navigation";
+
 export default function Login({onClose}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

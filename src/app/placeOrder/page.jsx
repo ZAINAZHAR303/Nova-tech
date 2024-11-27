@@ -7,8 +7,7 @@ function PlaceOrder() {
   const router = useRouter();
   const totalPrice = router.query?.totalPrice || 0;
 
-  // Parse the cartItems from the query string (handle potential errors)
-//   const parsedCartItems = JSON.parse(cartItems) || []; // Return empty array if parsing fails
+  
 
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
