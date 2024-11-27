@@ -1,18 +1,19 @@
 'use client';
 
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { db } from "../../../config/firebase";
 import { collection, addDoc,deleteDoc } from "firebase/firestore"; // Import Firestore functions
 import DisplayProduct from "../displayProduct/DisplayProduct";
+import { CloseOutlined } from "@mui/icons-material";
 
-export default function AddProduct() {
+export default function AddProduct({ onClose }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const[image1, setImage1] = useState("");
   const[image2, setImage2] = useState("");
   const [description, setDescription] = useState("");
-  
+  const modelref = useRef();
   const addProductHandler = async () => {
     try {
       const product = {
@@ -36,9 +37,17 @@ export default function AddProduct() {
     setDescription("");
 
   };
+  const CloseModel = (e) => {
+    if (modelref.current === e.target) {
+      onClose();
+    }
+  };
 
   return (
-    <div>
+    <div ref={modelref}
+    onClick={CloseModel} className="fixed  inset-0 z-30 h-screen w-screen bg-[rgba(0,0,0,0.4)] flex items-center justify-center">
+      <div className="w-[90%] p-4 rounded-[10px] bg-white">
+      <CloseOutlined onClick={onClose} />
       <input
         value={name}
         type="text"
@@ -84,7 +93,7 @@ export default function AddProduct() {
       <br />
       
       <button onClick={addProductHandler}>Add Product</button>
-      {/* <DisplayProduct/> */}
+      </div>
     </div>
   );
 }

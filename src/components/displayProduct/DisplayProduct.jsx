@@ -8,13 +8,10 @@ import Slider from "react-slick"; // Import React Slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function DisplayProduct({onUpdateHandle}) {
+export default function DisplayProduct({onUpdateHandle,cartHandle}) {
   const [products, setProducts] = useState([]);
 
   // State to hold the fetched products
- 
-
-
 
   const getProducts = async () => {
     try {
@@ -41,6 +38,7 @@ export default function DisplayProduct({onUpdateHandle}) {
       console.error("Error deleting document:", error);
     }
   };
+  
 
   useEffect(() => {
     getProducts();
@@ -64,25 +62,25 @@ export default function DisplayProduct({onUpdateHandle}) {
           key={item.id}
           className=" flex flex-col items-center justify-center w-full p-4 rounded-lg ">
           {/* React Slick Slider */}
-          <Slider {...sliderSettings} className="w-full mb-4">
-            <div>
+          <Slider {...sliderSettings} className="w-[400px] bg-green-200 mb-4 flex items-center justify-center">
+            <div className="custom-div">
               <img
                 src={item.image}
-                className="w-full rounded-md"
+                className=" custom-div object-cover"
                 alt="Product Image 1"
               />
             </div>
-            <div>
+            <div className="custom-div">
               <img
                 src={item.image1}
-                className="w-full rounded-md"
+                className="custom-div object-cover"
                 alt="Product Image 2"
               />
             </div>
-            <div>
+            <div className="custom-div">
               <img
                 src={item.image2}
-                className="w-full rounded-md"
+                className="custom-div bg-cover"
                 alt="Product Image 3"
               />
             </div>
@@ -110,6 +108,7 @@ export default function DisplayProduct({onUpdateHandle}) {
             className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700">
             update
           </button>
+          <button onClick={()=>cartHandle(item)} className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-red-700">Add to Cart</button>
         </div>
       ))}
     </div>

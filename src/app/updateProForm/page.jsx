@@ -9,7 +9,7 @@ export default function OtherPage() {
   const router = useRouter();
   // Load the selected item from localStorage
   useEffect(() => {
-    const storedItem = localStorage.getItem("selectedItem");
+    const storedItem = localStorage.getItem("selectedItem for Update");
     if (storedItem) {
       setItem(JSON.parse(storedItem));
     }
@@ -19,15 +19,23 @@ export default function OtherPage() {
   const updateHandler = async () => {
     if (item?.id) {
       try {
-        const docRef = doc(db, "products", item.id); // Ensure `item.id` matches Firestore document ID
-        await updateDoc(docRef, {
+        const docRef = doc(db, "products", item.id);
+        const data = {
           name: item.name,
           description: item.description,
           price: item.price,
           image: item.image,
-          image1: item.image1,
-          image2: item.image2,
-        });
+        };
+  
+        if (item.image1) {
+          data.image1 = item.image1;
+        }
+  
+        if (item.image2) {
+          data.image2 = item.image2;
+        }
+  
+        await updateDoc(docRef, data);
         alert("Item updated successfully!");
         router.push("/");
       } catch (error) {
