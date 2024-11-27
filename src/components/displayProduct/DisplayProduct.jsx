@@ -10,6 +10,15 @@ import "slick-carousel/slick/slick-theme.css";
 
 export default function DisplayProduct({ onUpdateHandle, cartHandle,query}) {
   const [products, setProducts] = useState([]);
+  const[Loginitem,setLoginItem] =useState(null)
+
+  useEffect(() => {
+    const storedLogin = localStorage.getItem("selectedItem for login");
+    if (storedLogin) {
+      setLoginItem(JSON.parse(storedLogin));
+    }
+  }, []);
+
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e) => {
@@ -125,17 +134,23 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle,query}) {
           </button>
 
           {/* Delete Button */}
-          <div className="flex gap-4  ">
+          {
+            Loginitem? <div>
+            <div className="flex gap-4  ">
             <button
-              onClick={() => onDeleteHandler(item.id)}
-              className="mt-4 px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-red-600 hover:scale-105 hover:shadow-lg active:scale-95">
-              Delete
-            </button>
-            <button
-              onClick={() => onUpdateHandle(item)}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95">
-              Update
-            </button>
+                onClick={() => onDeleteHandler(item.id)}
+                className="mt-4 px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-red-600 hover:scale-105 hover:shadow-lg active:scale-95">
+                Delete
+              </button>
+              <button
+                onClick={() => onUpdateHandle(item)}
+                className="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95">
+                Update
+              </button>
+            
+            </div>
+          :null  
+          }
           </div>
         </div>
       ))}
