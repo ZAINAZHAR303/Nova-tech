@@ -8,9 +8,9 @@ import Slider from "react-slick"; // Import React Slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function DisplayProduct({ onUpdateHandle, cartHandle,query}) {
+export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
   const [products, setProducts] = useState([]);
-  const[Loginitem,setLoginItem] =useState(null)
+  const [Loginitem, setLoginItem] = useState(null);
 
   useEffect(() => {
     const storedLogin = localStorage.getItem("selectedItem for login");
@@ -73,87 +73,97 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle,query}) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center mt-[20px]">
-      {products.filter((item) => item.name.toLowerCase().includes(query)).map((item) => (
-        <div
-          key={item.id}
-          className=" flex flex-col items-center justify-center w-full p-4 rounded-lg border-l-1 ">
-          {/* React Slick Slider */}
-          <Slider
-            {...sliderSettings}
-            className="w-[400px]  mb-4 flex items-center justify-center">
-            <div className="custom-div image-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-              <img
-                src={item.image}
-                className="zoom-image custom-div object-cover"
-                alt="Product Image 1"
-                style={{
-                  transformOrigin: `${position.x}% ${position.y}%`,
-                  // transform: "scale(2)", // Adjust the zoom level here
-                }}
-              />
-            </div>
-            <div className="custom-div image-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-              <img
-                src={item.image1}
-                className="zoom-image custom-div object-cover"
-                alt="Product Image 2"
-                style={{
-                  transformOrigin: `${position.x}% ${position.y}%`,
-                  // transform: "scale(2)", // Adjust the zoom level here
-                }}
-              />
-            </div>
-            <div className="custom-div image-container" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-              <img
-                src={item.image2}
-                className="zoom-image custom-div bg-cover"
-                alt="Product Image 3"
-                style={{
-                  transformOrigin: `${position.x}% ${position.y}%`,
-                  // transform: "scale(2)", // Adjust the zoom level here
-                }}
-              />
-            </div>
-          </Slider>
+    <div className="grid grid-col-1 md:grid-cols-3 xl:grid-cols-4  items-center justify-center mt-[20px]">
+      {products
+        .filter((item) => item.name.toLowerCase().includes(query))
+        .map((item) => (
+          <div
+            key={item.id}
+            className=" flex flex-col items-center justify-center w-full p-4 rounded-lg border-l-1 ">
+            {/* React Slick Slider */}
+            <Slider
+              {...sliderSettings}
+              className="w-[209px]  mb-4 flex items-center justify-center">
+              <div
+                className="custom-div image-container"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}>
+                <img
+                  src={item.image}
+                  className="zoom-image custom-div object-cover"
+                  alt="Product Image 1"
+                  style={{
+                    transformOrigin: `${position.x}% ${position.y}%`,
+                    // transform: "scale(2)", // Adjust the zoom level here
+                  }}
+                />
+              </div>
+              <div
+                className="custom-div image-container"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}>
+                <img
+                  src={item.image1}
+                  className="zoom-image custom-div object-cover"
+                  alt="Product Image 2"
+                  style={{
+                    transformOrigin: `${position.x}% ${position.y}%`,
+                    // transform: "scale(2)", // Adjust the zoom level here
+                  }}
+                />
+              </div>
+              <div
+                className="custom-div image-container"
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}>
+                <img
+                  src={item.image2}
+                  className="zoom-image custom-div bg-cover"
+                  alt="Product Image 3"
+                  style={{
+                    transformOrigin: `${position.x}% ${position.y}%`,
+                    // transform: "scale(2)", // Adjust the zoom level here
+                  }}
+                />
+              </div>
+            </Slider>
 
-          {/* Product Details */}
-          <p className="text-sm text-gray-700 text-[13px] my-[10px]">
-            {item.description}
-          </p>
-          <h2 className="text-xl text-[15px] text-[#171717] font-medium">
-            {item.name}
-          </h2>
-          <p className="text-lg  font-semibold my-[8px] text-[#FF4545]">
-            RS: {item.price}
-          </p>
-          <button
-            onClick={() => cartHandle(item)}
-            className="mt-2 px-4 py-2 border-[0.5px] border-[#212121] text-[#212121] font-light rounded transform transition-transform transition-colors duration-300 ease-in-out hover:text-white hover:border-transparent hover:bg-red-500">
-            ADD TO CART
-          </button>
-
-          {/* Delete Button */}
-          {
-            Loginitem? <div>
-            <div className="flex gap-4  ">
+            {/* Product Details */}
+            <p className="text-sm text-gray-700 text-[13px] my-[10px]">
+              {item.description}
+            </p>
+            <h2 className="text-xl text-[15px] text-[#171717] font-medium">
+              {item.name}
+            </h2>
+            <p className="text-lg  font-semibold my-[8px] text-[#FF4545]">
+              RS: {item.price}
+            </p>
             <button
-                onClick={() => onDeleteHandler(item.id)}
-                className="mt-4 px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-red-600 hover:scale-105 hover:shadow-lg active:scale-95">
-                Delete
-              </button>
-              <button
-                onClick={() => onUpdateHandle(item)}
-                className="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95">
-                Update
-              </button>
-            
-            </div>
-          :null  
-          }
+              onClick={() => cartHandle(item)}
+              className="mt-2 px-4 py-2 border-[0.5px] border-[#212121] text-[#212121] font-light rounded transform transition-transform transition-colors duration-300 ease-in-out hover:text-white hover:border-transparent hover:bg-red-500">
+              ADD TO CART
+            </button>
+
+            {/* Delete Button */}
+            {Loginitem ? (
+              <div>
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => onDeleteHandler(item.id)}
+                    className="mt-4 px-4 py-2 bg-red-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-red-600 hover:scale-105 hover:shadow-lg active:scale-95">
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => onUpdateHandle(item)}
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md transform transition-transform duration-300 ease-in-out hover:bg-blue-600 hover:scale-105 hover:shadow-lg active:scale-95">
+                    Update
+                  </button>
+                </div>
+              </div>
+            ) : null}
           </div>
-        </div>
-      ))}
+          // </div>
+        ))}
     </div>
   );
 }

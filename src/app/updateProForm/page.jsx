@@ -48,17 +48,19 @@ export default function OtherPage() {
   };
 
   return (
-    <div>
-      <h1>Other Page</h1>
+    <div className="flex items-center justify-center h-screen">
+      
       {item && (
-        <>
+        <div className="flex flex-col  ">
           <input
+          className="custom-input"
             type="text"
             value={item.name}
             onChange={(e) => setItem({ ...item, name: e.target.value })}
             placeholder="Name"
           />
           <input
+          className="custom-input"
             type="text"
             value={item.description}
             onChange={(e) =>
@@ -67,31 +69,35 @@ export default function OtherPage() {
             placeholder="Description"
           />
           <input
+          className="custom-input"
             type="text"
             value={item.price}
             onChange={(e) => setItem({ ...item, price: e.target.value })}
             placeholder="Price"
           />
           <input
+          className="custom-input"
             type="text"
             value={item.image}
             onChange={(e) => setItem({ ...item, image: e.target.value })}
             placeholder="Image URL"
           />
           <input
+          className="custom-input"
             type="text"
             value={item.image1}
             onChange={(e) => setItem({ ...item, image1: e.target.value })}
             placeholder="Image 1 URL"
           />
           <input
+          className="custom-input"
             type="text"
             value={item.image2}
             onChange={(e) => setItem({ ...item, image2: e.target.value })}
             placeholder="Image 2 URL"
           />
-          <button onClick={updateHandler}>Update</button>
-        </>
+          <button className="w-[500px] h-[40px] bg-[#212121] text-white font-medium mt-[20px] " onClick={updateHandler}>Update</button>
+        </div>
       )}
     </div>
   );

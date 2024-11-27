@@ -67,5 +67,23 @@ body {
   transform: scale(2); /* Zoom effect */
 }
 .custom-div {
-  @apply w-[400px] h-[400px];
+  @apply w-[209px] h-[209px];
+}
+.custom-input{
+  @apply border border-[#2E2E2E] px-4 py-2 w-[500px] mb-4 rounded-lg focus:outline-none transition-all duration-300 ease-in-out transform opacity-100
+}
+.custom-input::placeholder {
+  /* Styles for placeholder text */
+  color: #999; /* Adjust color as needed */
+  font-size: 0.8em; /* Adjust font size as needed */
+  transition: all 0.2s ease-in-out;
+  
+}
+
+.custom-input:focus::placeholder {
+  /* Styles for placeholder text when input is focused */
+  color: #333; /* Adjust color as needed */
+  font-size: 0.7em;
+  z-index: 10; /* Adjust font size as needed */
+  transform: translateY(-15px); /* Adjust vertical shift as needed */
 }

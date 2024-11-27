@@ -1,70 +1,70 @@
-"use client"
-import Image from "next/image";
+"use client";
+
 import Navbar from "../components/Navbar";
 import ShopGrid from "@/components/ShopGrid";
 import DisplayProduct from "@/components/displayProduct/DisplayProduct";
 import AddProduct from "@/components/addProduct/AddProduct";
 import { useRouter } from "next/navigation";
-import {useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import Login from "@/components/login/Login";
+import { AddCircleOutlined, LogoutOutlined } from "@mui/icons-material";
 
 export default function Home() {
   const router = useRouter();
-  const[addpro, setAddPro] = useState(false)
+  const [addpro, setAddPro] = useState(false);
   const [message, setMessage] = useState("");
-<<<<<<< HEAD
-  const[query,setquery] = useState("")
+  const [query, setquery] = useState("");
+  // const [login, setlogin] = useState(false);
 
-=======
-  const[Loginitem,setLoginItem] =useState(null)
-  
+  const [Loginitem, setLoginItem] = useState(null);
+
   useEffect(() => {
     const storedLogin = localStorage.getItem("selectedItem for login");
     if (storedLogin) {
       setLoginItem(JSON.parse(storedLogin));
     }
   }, []);
-const logOutHandler = ()=>{
-  localStorage.removeItem("selectedItem for login",);
-}
->>>>>>> 1b7021baaa2fe03a83e391d0b0b736981b44c85d
+  const logOutHandler = () => {
+    localStorage.removeItem("selectedItem for login");
+  };
   // Function to handle data from child
-  const cartHandle = (item) =>{
-    console.log(item)
+  const cartHandle = (item) => {
+    console.log(item);
     localStorage.setItem("selectedItem for cart", JSON.stringify(item));
-  }
+  };
   const onUpdateHandle = (item) => {
     console.log("item world");
-    console.log(item)
+    console.log(item);
     localStorage.setItem("selectedItem for Update", JSON.stringify(item));
     router.push("/updateProForm");
-  }
+  };
 
   return (
     <div className="  font-[family-name:var(--font-geist-sans)]">
-     
       <Navbar setquery={setquery} />
       <ShopGrid />
-<<<<<<< HEAD
-      <DisplayProduct onUpdateHandle={onUpdateHandle} cartHandle={cartHandle} query={query} />
-      <button onClick={() => setAddPro(true)}>hello Product</button>
-=======
-      {Loginitem ?
-       <div>
-        <button className="mt-4  px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"onClick={() => setAddPro(true)}>Add new product</button> <br/>
-        <button className="mt-4  px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" onClick={logOutHandler}>Logout</button>
+      {Loginitem ? (
+        <div className="flex items-center mt-4 ml-4 gap-4 ">
+          <AddCircleOutlined onClick={() => setAddPro(true)} />
+
+          <LogoutOutlined
+            
+            onClick={logOutHandler}
+          />
         </div>
-:null}
-            <Login/>
-      <DisplayProduct onUpdateHandle={onUpdateHandle} cartHandle={cartHandle} />
-      
->>>>>>> 1b7021baaa2fe03a83e391d0b0b736981b44c85d
-      {
-        addpro && <AddProduct onClose={() => setAddPro(false)} />
-      }
+      ) : null}
+      <DisplayProduct
+        onUpdateHandle={onUpdateHandle}
+        cartHandle={cartHandle}
+        query={query}
+      />
+
+      {/* <Login /> */}
+      {/* <DisplayProduct onUpdateHandle={onUpdateHandle} cartHandle={cartHandle} /> */}
+
+      {addpro && <AddProduct onClose={() => setAddPro(false)} />}
       {/* <CartProducts /> */}
-      
     </div>
   );
 }

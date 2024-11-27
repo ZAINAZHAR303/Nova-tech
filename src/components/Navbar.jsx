@@ -1,32 +1,40 @@
 "use client"
-import { LocalMallOutlined, Search, ViewWeek } from "@mui/icons-material";
+import { AccountCircleOutlined, LocalMallOutlined, Search, ViewWeek } from "@mui/icons-material";
 import React, { useState } from "react";
 import CartProducts from "./CartProducts";
+import Login from "./login/Login";
+import logo from "../app/assets/favicon.png"
 // import {logo} from "../assets/logo.jpg"
 const Navbar = ({setquery}) => {
   const [showCart, setShowCart] = useState(false);
   const [showSearch,setShowSearch] = useState(false)
-
+  const [loginFun, setLoginFun] = useState(false);
   return (
     <>
-    <nav className="flex justify-between items-center p-4 w-full my-4 bg-white  ">
-    {!showSearch && (
-        <h3 className="text-2xl font-bold text-orange-400">NOVA TECH</h3>
-      )}
+    <nav className="flex justify-between relative items-center p-4 w-full my-4 bg-white  ">
+    {!showSearch || window.innerWidth >= 768 ? (
+          <h3 className="text-2xl font-bold text-orange-400 md:block">
+            NOVATECH
+          </h3>
+         
+        ) : null}
       {
-        showSearch &&(
+        showSearch || window.innerWidth >= 768 ? (
+          <div className="md:absolute md:top-[50%] md:left-[50%] md:translate-x-[-50%] md:translate-y-[-50%]   md:w-[400px]">
           <input
             type="text"
             placeholder="Search"
-            className="border border-black px-4 py-2 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-orange-400 transition-all duration-300 ease-in-out transform opacity-100"
+            className="border border-black px-4 py-2 rounded-3xl shadow-md focus:outline-none  transition-all duration-300 ease-in-out transform opacity-100 md:w-full "
             onChange={(e) => setquery(e.target.value.toLowerCase())}
-            style={{ opacity: showSearch ? 1 : 0, transform: showSearch ? 'scale(1)' : 'scale(0.9)' }}
+            
           />
-        )
+          </div>
+        ):null
       }
       <div className="flex gap-4">
-        <Search className="" onClick={() => setShowSearch(!showSearch)} />
+        <Search className="md:hidden" onClick={() => setShowSearch(!showSearch)} />
         <LocalMallOutlined onClick={() => setShowCart(true)} />
+          <AccountCircleOutlined onClick={()=>setLoginFun(!loginFun)} />
         <ViewWeek className="rotate-90 "   />
       </div>
       {/* {showCart && <CartProducts onClose={() => setShowCart(false)} />} */}
@@ -36,6 +44,13 @@ const Navbar = ({setquery}) => {
         <CartProducts onClose={() => setShowCart(false)} />
       </div>
     )}
+    {
+      loginFun && (
+        <div >
+          <Login onClose={() => setLoginFun(false)} />
+        </div>
+      )
+    }
     </>
   );
 };
