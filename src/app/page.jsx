@@ -7,13 +7,12 @@ import AddProduct from "@/components/addProduct/AddProduct";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-
 import { AddCircleOutlined, LogoutOutlined } from "@mui/icons-material";
 
 export default function Home() {
   const router = useRouter();
   const [addpro, setAddPro] = useState(false);
-  
+
   const [query, setquery] = useState("");
   // const [login, setlogin] = useState(false);
 
@@ -30,27 +29,22 @@ export default function Home() {
   };
   // Function to handle data from child
   const cartHandle = (item) => {
-    
     localStorage.setItem("selectedItem for cart", JSON.stringify(item));
   };
   const onUpdateHandle = (item) => {
-    
     localStorage.setItem("selectedItem for Update", JSON.stringify(item));
     router.push("/updateProForm");
   };
 
   return (
-    <div className="  font-[family-name:var(--font-geist-sans)]">
+    <div className=" bg-white  font-[family-name:var(--font-geist-sans)]">
       <Navbar setquery={setquery} />
       <ShopGrid />
       {Loginitem ? (
         <div className="flex items-center mt-4 ml-4 gap-4 ">
           <AddCircleOutlined onClick={() => setAddPro(true)} />
 
-          <LogoutOutlined
-            
-            onClick={logOutHandler}
-          />
+          <LogoutOutlined onClick={logOutHandler} />
         </div>
       ) : null}
       <DisplayProduct
@@ -59,10 +53,7 @@ export default function Home() {
         query={query}
       />
 
-      
-
       {addpro && <AddProduct onClose={() => setAddPro(false)} />}
-      
     </div>
   );
 }
