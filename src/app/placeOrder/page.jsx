@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import emailjs from "emailjs-com";
 
 function PlaceOrder() {
@@ -63,6 +63,7 @@ function PlaceOrder() {
   };
 
   return (
+    <Suspense fallback={<div>Loading...</div>}>
     <div className="grid grid-cols-1 items-center h-screen lg:grid-cols-2 w-full">
       <div className="flex items-center gap-4 flex-col lg:h-full lg:items-start lg:pt-[55px] lg:pl-[50px] rounded-lg w-full p-4 ">
         {cartitems.map((item) => (
@@ -146,7 +147,9 @@ function PlaceOrder() {
         <h2 className="text-center">Payment method: Cash on delivery</h2>
       </form>
     </div>
+    </Suspense>
   );
+  
 }
 
 export default PlaceOrder;
