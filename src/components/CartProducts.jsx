@@ -31,13 +31,16 @@ const CartProducts = ({ onClose }) => {
     }
   }, []);
 
+  
   useEffect(() => {
-    // Calculate total price whenever cartitems changes
-    const newTotalPrice = cartitems.reduce((sum, item) => sum + parseFloat(item.price), 0);
+    const newTotalPrice = cartitems.reduce(
+      (sum, item) => sum + parseFloat(item.price),
+      0
+    );
     setTotalPrice(newTotalPrice);
-    localStorage.setItem("totalPrice", totalPrice);
+    localStorage.setItem("totalPrice", JSON.stringify(newTotalPrice));
   }, [cartitems]);
-
+  
   const CloseModel = (e) => {
     if (modelref.current === e.target) {
       onClose();
@@ -86,7 +89,7 @@ const CartProducts = ({ onClose }) => {
           </div>
         ))}
         <div className="mt-12 flex items-center justify-between">
-          <h1 className="text-[20px] font-bold   ">Subtotal</h1>
+          <h1 className="text-[20px] font-bold ">Subtotal</h1>
           <h2 className="text-[20px] font-bold">{totalPrice.toFixed(1)} RS.</h2>
         </div>
         <Link href={{

@@ -11,13 +11,13 @@ function PlaceOrder() {
 
   useEffect(() => {
     const storedTotal = localStorage.getItem("totalPrice") || "0";
-    setTotal(storedTotal);
+    setTotal(JSON.parse(storedTotal));
     
     const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
     }
-  }, [searchParams]); 
+  },[]); 
 
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
