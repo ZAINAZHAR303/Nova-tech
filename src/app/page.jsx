@@ -13,7 +13,7 @@ import { AddCircleOutlined, LogoutOutlined } from "@mui/icons-material";
 export default function Home() {
   const router = useRouter();
   const [addpro, setAddPro] = useState(false);
-  const [message, setMessage] = useState("");
+  
   const [query, setquery] = useState("");
   // const [login, setlogin] = useState(false);
 
@@ -59,11 +59,10 @@ export default function Home() {
         query={query}
       />
 
-      {/* <Login /> */}
-      {/* <DisplayProduct onUpdateHandle={onUpdateHandle} cartHandle={cartHandle} /> */}
+      
 
       {addpro && <AddProduct onClose={() => setAddPro(false)} />}
-      {/* <CartProducts /> */}
+      
     </div>
   );
 }
