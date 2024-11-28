@@ -35,6 +35,7 @@ const CartProducts = ({ onClose }) => {
     // Calculate total price whenever cartitems changes
     const newTotalPrice = cartitems.reduce((sum, item) => sum + parseFloat(item.price), 0);
     setTotalPrice(newTotalPrice);
+    localStorage.setItem("totalPrice", totalPrice);
   }, [cartitems]);
 
   const CloseModel = (e) => {
@@ -90,10 +91,7 @@ const CartProducts = ({ onClose }) => {
         </div>
         <Link href={{
             pathname: "/placeOrder",
-            query: {
-              totalPrice: totalPrice.toFixed(1),
-              // cartItems: JSON.stringify(cartitems.map(item => ({ name: item.name, price: item.price }))),
-            },
+            
           }}>
         <div>
           <button className="w-full h-[40px] bg-[#212121] text-white font-medium mt-[20px] ">Checkout</button>

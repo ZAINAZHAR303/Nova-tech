@@ -1,24 +1,23 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+
 import { useState, useEffect, Suspense } from "react";
 import emailjs from "emailjs-com";
 
 function PlaceOrder() {
-  const searchParams = useSearchParams();
-  console.log(searchParams);
+  
+  
   const [total, setTotal] = useState("");
   const [cartitems, setCartItems] = useState([]);
 
   useEffect(() => {
-    const totalPrice = searchParams.get("totalPrice") || 0;
-    setTotal(totalPrice);
-
-    // Parse cartitems from query parameter
+    const storedTotal = localStorage.getItem("totalPrice") || "0";
+    setTotal(storedTotal);
+    
     const storedCartItems = localStorage.getItem("cartItems");
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
     }
-  }, [searchParams]); // Update whenever searchParams change
+  }, [searchParams]); 
 
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
