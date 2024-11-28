@@ -91,7 +91,8 @@ const CartProducts = ({ onClose }) => {
         <Link href={{
             pathname: "/placeOrder",
             query: {
-             totalPrice: totalPrice,
+              totalPrice: totalPrice.toFixed(1),
+              // cartItems: JSON.stringify(cartitems.map(item => ({ name: item.name, price: item.price }))),
             },
           }}>
         <div>
