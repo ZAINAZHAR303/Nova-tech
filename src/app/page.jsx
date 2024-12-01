@@ -7,11 +7,14 @@ import AddProduct from "@/components/addProduct/AddProduct";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+
 import { AddCircleOutlined, LogoutOutlined } from "@mui/icons-material";
+import Loader from "@/components/loader/Loader";
 
 export default function Home() {
   const router = useRouter();
   const [addpro, setAddPro] = useState(false);
+  
 
   const [query, setquery] = useState("");
   // const [login, setlogin] = useState(false);
@@ -47,11 +50,13 @@ export default function Home() {
           <LogoutOutlined onClick={logOutHandler} />
         </div>
       ) : null}
-      <DisplayProduct
-        onUpdateHandle={onUpdateHandle}
+      
+       
+      <DisplayProduct 
+        
+        onUpdateHandle={onUpdateHandle} 
         cartHandle={cartHandle}
-        query={query}
-      />
+        query={query} />
 
       {addpro && <AddProduct onClose={() => setAddPro(false)} />}
     </div>

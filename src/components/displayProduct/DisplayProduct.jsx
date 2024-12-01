@@ -7,11 +7,12 @@ import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import Slider from "react-slick"; // Import React Slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loader from "../loader/Loader";
 
 export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
   const [products, setProducts] = useState([]);
   const [Loginitem, setLoginItem] = useState(null);
-
+  const [loadings, setLoadings] = useState(false);
   useEffect(() => {
     const storedLogin = localStorage.getItem("selectedItem for login");
     if (storedLogin) {
@@ -33,7 +34,9 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
   // State to hold the fetched products
 
   const getProducts = async () => {
+    
     try {
+      setLoadings(true); // Show loading spinner
       const collectionRef = collection(db, "products");
       const docs = await getDocs(collectionRef);
       let data = [];
@@ -41,8 +44,10 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
         data.push({ id: doc.id, ...doc.data() }); // Store document ID and data
       });
       setProducts(data);
+      setLoadings(false); // Hide loading spinner
     } catch (error) {
       console.error("Error fetching products:", error);
+      setLoadings(false); // Hide loading spinner
     }
   };
 
@@ -73,8 +78,8 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
   };
 
   return (
-    <div className="grid grid-col-1 md:grid-cols-3 xl:grid-cols-4  items-center justify-center mt-[20px]">
-      {products
+    <div className="grid grid-col-1 md:grid-cols-3 bg-white  xl:grid-cols-4  items-center justify-center mt-[20px]">
+      {loadings? (<Loader />):( products
         .filter((item) => item.name.toLowerCase().includes(query))
         .map((item) => (
           <div
@@ -163,7 +168,8 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
             ) : null}
           </div>
           // </div>
-        ))}
+        )))}
+     
     </div>
   );
 }

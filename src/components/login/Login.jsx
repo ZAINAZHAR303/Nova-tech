@@ -35,6 +35,7 @@ export default function Login({onClose}) {
         JSON.stringify(userCredential.user.uid)
         
       );
+      alert("login successfully");
       location.reload();
     } catch (error) {
       
