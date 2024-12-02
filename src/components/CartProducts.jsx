@@ -84,6 +84,7 @@ const CartProducts = ({ onClose }) => {
                 className="cursor-pointer fixed right-4"
                 onClick={() => handleDeleteItem(item.id)} // Pass item id to handleDeleteItem
               />
+              
             </div>
             
           </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { db } from "../../../config/firebase";
 import { collection, addDoc, deleteDoc } from "firebase/firestore"; // Import Firestore functions
 
@@ -9,33 +9,146 @@ import { CloseOutlined } from "@mui/icons-material";
 export default function AddProduct({ onClose }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [image, setImage] = useState("");
-  const [image1, setImage1] = useState("");
-  const [image2, setImage2] = useState("");
+  const [image1, setImage1] = useState(null);
+  const [image2, setImage2] = useState(null);
+  const [image3, setImage3] = useState(null);
+
+  const [image1url, setImage1url] = useState("");
+  const [image2url, setImage2url] = useState("");
+  const [image3url, setImage3url] = useState("");
   const [description, setDescription] = useState("");
   const modelref = useRef();
   const addProductHandler = async () => {
     try {
-      const product = {
+      let uploadedImage1Url = "";
+      let uploadedImage2Url = "";
+      let uploadedImage3Url = "";
+  
+      if (image1) uploadedImage1Url = await uploadImage1();
+      if (image2) uploadedImage2Url = await uploadImage2();
+      if (image3) uploadedImage3Url = await uploadImage3();
+  
+      if (!uploadedImage1Url && image1) throw new Error("Image1 URL not set");
+      if (!uploadedImage2Url && image2) throw new Error("Image2 URL not set");
+      if (!uploadedImage3Url && image3) throw new Error("Image3 URL not set");
+  
+      // Update state (optional if you want to store for UI purposes)
+      setImage1url(uploadedImage1Url);
+      setImage2url(uploadedImage2Url);
+      setImage3url(uploadedImage3Url);
+  
+      // Add product to Firestore
+      await addProductToFirestore({
         name,
         price,
-        image,
-        image1,
-        image2,
         description,
-      };
-
-      // Add a new document to the "products" collection
-      const docRef = await addDoc(collection(db, "products"), product);
+        image1url: uploadedImage1Url,
+        image2url: uploadedImage2Url,
+        image3url: uploadedImage3Url,
+      });
+  
+      resetForm();
+      alert("Product added successfully!");
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error("Error adding product:", error);
+      alert("Failed to add product. See console for details.");
     }
+  };
+  
+  
+  const uploadImage1 = async () => {
+    const data = new FormData();
+    data.append('file', image1);
+    data.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+    data.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+  
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL, {
+        method: 'POST',
+        body: data
+      });
+      const responseData = await response.json();
+      console.log("image1url",responseData.url)
+      setImage1url(responseData.url)
+      return responseData.url;
+    } catch (error) {
+      console.error("Error uploading image1:", error);
+    }
+  };
+  
+  const uploadImage2 = async () => {
+    const data = new FormData();
+    data.append('file', image2);
+    data.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+    data.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+  
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL, {
+        method: 'POST',
+        body: data
+      });
+      const responseData = await response.json();
+      console.log("image2url", responseData.url)
+        setImage2url(responseData.url)
+        return responseData.url;
+       
+    } catch (error) {
+      console.error("Error uploading image2:", error);
+    }
+  };
+  
+  const uploadImage3 = async () => {
+    const data = new FormData();
+    data.append('file', image3);
+    data.append('upload_preset', process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+    data.append('cloud_name', process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME);
+  
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_CLOUDINARY_URL, {
+        method: 'POST',
+        body: data
+      });
+      const responseData = await response.json();
+      console.log("image3url",responseData.url)
+      setImage3url(responseData.url)
+      return responseData.url;
+    } catch (error) {
+      console.error("Error uploading image3:", error);
+    }
+  };
+  useEffect(() => {
+    if (image1url) {
+      console.log("Image1 URL in state:", image1url);
+    }
+  }, [image1url]);
+  useEffect(() => {
+    if (image2url) {
+      console.log("Image2 URL in state:", image2url);
+    }
+  }, [image2url]);
+  useEffect(() => {
+    if (image3url) {
+      console.log("Image3 URL in state:", image3url);
+    }
+  }, [image3url]);
+
+  const addProductToFirestore = async (product) => {
+    console.log("Adding product to Firestore:", product);
+    await addDoc(collection(db, "products"), product);
+  };
+  
+  
+  const resetForm = () => {
     setName("");
     setPrice("");
-    setImage("");
     setDescription("");
-  };
-  const CloseModel = (e) => {
+    setImage1(null);
+    setImage2(null);
+    setImage3(null);
+    setImage1url("");
+    setImage2url("");
+    setImage3url("");
+  };  const CloseModel = (e) => {
     if (modelref.current === e.target) {
       onClose();
     }
@@ -74,29 +187,31 @@ export default function AddProduct({ onClose }) {
 
         <input
           className="custom-input"
-          value={image}
-          type="text"
+          type="file"
           placeholder="Image URL"
-          onChange={(e) => setImage(e.target.value)}
+          onChange={(e) => setImage1(e.target.files[0])}
         />
 
         <input
           className="custom-input"
-          value={image1}
-          type="text"
+          type="file"
           placeholder="2nd optional Image URL"
-          onChange={(e) => setImage1(e.target.value)}
+          onChange={(e) => setImage2(e.target.files[0])}
         />
 
         <input
           className="custom-input"
-          value={image2}
-          type="text"
+          type="file"
           placeholder="3rd optional Image URL"
-          onChange={(e) => setImage2(e.target.value)}
+          onChange={(e) => setImage3(e.target.files[0])}
         />
 
-        <button className="w-[80%] h-[40px] bg-[#212121] text-white font-medium mt-[20px]" onClick={addProductHandler}>Add Product</button>
+        <button
+          className="w-[80%] h-[40px] bg-[#212121] text-white font-medium mt-[20px]"
+          onClick={addProductHandler}>
+          Add Product
+        </button>
+
       </div>
     </div>
   );

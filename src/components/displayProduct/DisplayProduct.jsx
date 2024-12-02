@@ -94,7 +94,7 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}>
                 <img
-                  src={item.image}
+                  src={item.image1url}
                   className="zoom-image custom-div object-cover"
                   alt="Product Image 1"
                   style={{
@@ -108,7 +108,7 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}>
                 <img
-                  src={item.image1}
+                  src={item.image2url}
                   className="zoom-image custom-div object-cover"
                   alt="Product Image 2"
                   style={{
@@ -122,7 +122,7 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}>
                 <img
-                  src={item.image2}
+                  src={item.image3url}
                   className="zoom-image custom-div bg-cover"
                   alt="Product Image 3"
                   style={{
