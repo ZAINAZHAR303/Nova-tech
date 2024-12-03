@@ -29,7 +29,7 @@ function PlaceOrder() {
           return `Item ${index + 1}:\n` +
             `Name: ${item.name || "N/A"}\n` +
             `Price: ${item.price || "N/A"}\n` +
-            `Image: ${item.image || "N/A"}\n`;
+            `Image: ${item.image1url || "N/A"}\n`;
         })
         .join("\n");
       setConcatenatedString(formattedString);
@@ -85,7 +85,7 @@ function PlaceOrder() {
             key={item.id}
             className="h-[125px] w-[400px] border p-4 rounded-md flex items-center justify-start">
             <img
-              src={item.image}
+              src={item.image1url}
               alt={item.name}
               className="h-[120px] w-[120px]"
             />

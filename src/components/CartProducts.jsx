@@ -69,7 +69,7 @@ const CartProducts = ({ onClose }) => {
           <div key={item.id} className="flex items-center justify-between border-[1px] rounded-lg   p-4 mb-4">
             <div className="h-[80px] flex items-center justify-center">
               <img
-                src={item.image}
+                src={item.image1url}
                 alt={item.name}
                 className="h-[80px] w-[80px]"
               />

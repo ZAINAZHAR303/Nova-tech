@@ -72,6 +72,7 @@ export default function AddProduct({ onClose }) {
         method: "POST",
         body: data,
       });
+      // console.log("Raw response:", response);
       const responseData = await response.json();
 
       return responseData.url;
@@ -94,6 +95,7 @@ export default function AddProduct({ onClose }) {
         method: "POST",
         body: data,
       });
+    
       const responseData = await response.json();
 
       return responseData.url;
@@ -117,7 +119,8 @@ export default function AddProduct({ onClose }) {
         body: data,
       });
       const responseData = await response.json();
-      console.log("image3url", responseData.url);
+      
+      
 
       return responseData.url;
     } catch (error) {
@@ -125,8 +128,9 @@ export default function AddProduct({ onClose }) {
     }
   };
 
+
   const addProductToFirestore = async (product) => {
-    console.log("Adding product to Firestore:", product);
+    // console.log("Adding product to Firestore:", product);
     await addDoc(collection(db, "products"), product);
   };
 
