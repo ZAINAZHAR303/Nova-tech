@@ -10,12 +10,15 @@ import "slick-carousel/slick/slick-theme.css";
 import Loader from "../loader/Loader";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
+import CartProducts from "../CartProducts";
 
 
-export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
+export default function DisplayProduct({ onUpdateHandle, query }) {
   const [products, setProducts] = useState([]);
   const [Loginitem, setLoginItem] = useState(null);
   const [loadings, setLoadings] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+
   useEffect(() => {
     const storedLogin = localStorage.getItem("selectedItem for login");
     if (storedLogin) {
@@ -36,6 +39,13 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
   };
   // State to hold the fetched products
 
+  const cartHandle = (item) => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push(item); // Add the new item to the cart
+    localStorage.setItem("cart", JSON.stringify(cart))
+    setShowCart(true);
+
+  };
   const getProducts = async () => {
     
     try {
@@ -181,7 +191,11 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
           </div>
           // </div>
         )))}
-     
+     {showCart && (
+        <div className="absolute right-0 top-16 z-10">
+          <CartProducts onClose={() => setShowCart(false)} />
+        </div>
+      )}
     </div>
   );
 }

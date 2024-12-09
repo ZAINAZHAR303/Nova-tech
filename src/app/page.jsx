@@ -31,9 +31,7 @@ export default function Home() {
     localStorage.removeItem("selectedItem for login");
   };
   // Function to handle data from child
-  const cartHandle = (item) => {
-    localStorage.setItem("selectedItem for cart", JSON.stringify(item));
-  };
+ 
   const onUpdateHandle = (item) => {
     localStorage.setItem("selectedItem for Update", JSON.stringify(item));
     router.push("/updateProForm");
@@ -55,7 +53,7 @@ export default function Home() {
       <DisplayProduct 
         
         onUpdateHandle={onUpdateHandle} 
-        cartHandle={cartHandle}
+        // cartHandle={cartHandle}
         query={query} />
 
       {addpro && <AddProduct onClose={() => setAddPro(false)} />}

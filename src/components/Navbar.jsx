@@ -14,7 +14,7 @@ const Navbar = ({ setquery }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [loginFun, setLoginFun] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-
+  const[cartAmount,setCartAmount] = useState("");
   // Update `isMobileView` based on window width
   useEffect(() => {
     const handleResize = () => {
@@ -31,6 +31,11 @@ const Navbar = ({ setquery }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || []; // Retrieve cart data or an empty array
+ setCartAmount (cart.length);
+  },[]);
   return (
     <>
       <nav className="flex justify-between relative items-center p-4 w-full my-4 bg-white">
@@ -54,8 +59,13 @@ const Navbar = ({ setquery }) => {
             className="md:hidden"
             onClick={() => setShowSearch(!showSearch)}
           />
+          <div className=" relative ">
           <LocalMallOutlined onClick={() => setShowCart(true)} />
-          
+          <div className="h-4 w-4 bg-[#33D286] rounded-full flex justify-center items-center absolute -top-1 left-3">
+            <p className="text-white text-xs font-semibold ">{cartAmount}</p>
+
+          </div>
+          </div>
           <AccountCircleOutlined onClick={() => setLoginFun(!loginFun)} />
           <ViewWeek className="rotate-90" />
           
