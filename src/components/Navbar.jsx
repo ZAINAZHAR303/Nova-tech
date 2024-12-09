@@ -55,8 +55,11 @@ const Navbar = ({ setquery }) => {
             onClick={() => setShowSearch(!showSearch)}
           />
           <LocalMallOutlined onClick={() => setShowCart(true)} />
+          
           <AccountCircleOutlined onClick={() => setLoginFun(!loginFun)} />
           <ViewWeek className="rotate-90" />
+          
+
         </div>
       </nav>
       {showCart && (

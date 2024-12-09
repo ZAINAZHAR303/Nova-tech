@@ -23,6 +23,7 @@ export default function OtherPage() {
         const data = {
           name: item.name,
           description: item.description,
+          oldPrice: item.oldPrice,
           price: item.price,
           image: item.image,
         };
@@ -68,12 +69,19 @@ export default function OtherPage() {
             }
             placeholder="Description"
           />
+           <input
+          className="custom-input"
+            type="text"
+            value={item.oldPrice}
+            onChange={(e) => setItem({ ...item, oldPrice: e.target.value })}
+            placeholder="Old Price"
+          />
           <input
           className="custom-input"
             type="text"
             value={item.price}
             onChange={(e) => setItem({ ...item, price: e.target.value })}
-            placeholder="Price"
+            placeholder="New Price"
           />
           <input
           className="custom-input"

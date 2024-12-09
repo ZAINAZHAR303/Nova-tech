@@ -61,10 +61,11 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.2s ease, transform-origin 0.2s ease;
+  transition: transform 0.9s ease;
+  /* transition: transform 0.2s ease, transform-origin 0.2s ease; */
 }
 .image-container:hover .zoom-image {
-  transform: scale(1.3); /* Zoom effect */
+  transform: scale(1.2); /* Zoom effect */
 }
 .custom-div {
   @apply w-[209px] h-[209px];

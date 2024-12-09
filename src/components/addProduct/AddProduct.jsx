@@ -19,6 +19,7 @@ export default function AddProduct({ onClose }) {
   const [image3url, setImage3url] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setloading] = useState(false);
+  const [oldPrice,setOldPrice]=useState("");
   const modelref = useRef();
 
   const addProductHandler = async () => {
@@ -42,6 +43,7 @@ export default function AddProduct({ onClose }) {
 
       await addProductToFirestore({
         name,
+        oldPrice,
         price,
         description,
         image1url: uploadedImage1Url,
@@ -136,6 +138,7 @@ export default function AddProduct({ onClose }) {
 
   const resetForm = () => {
     setName("");
+    setOldPrice("");
     setPrice("");
     setDescription("");
     setImage1(null);
@@ -168,12 +171,19 @@ export default function AddProduct({ onClose }) {
             placeholder="Product Name"
             onChange={(e) => setName(e.target.value)}
           />
+          <input
+            className="custom-input"
+            value={oldPrice}
+            type="number"
+            placeholder="Old Price"
+            onChange={(e) => setOldPrice(e.target.value)}
+          />
 
           <input
             className="custom-input"
             value={price}
             type="number"
-            placeholder="Price"
+            placeholder="New Price"
             onChange={(e) => setPrice(e.target.value)}
           />
 

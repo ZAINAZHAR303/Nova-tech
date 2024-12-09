@@ -8,6 +8,9 @@ import Slider from "react-slick"; // Import React Slick
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Loader from "../loader/Loader";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
   const [products, setProducts] = useState([]);
@@ -67,6 +70,10 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   // Slider settings
   const sliderSettings = {
     dots: true,
@@ -84,7 +91,9 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
         .map((item) => (
           <div
             key={item.id}
-            className=" flex flex-col items-center justify-center w-full p-4 rounded-lg border-l-1 ">
+            className=" flex flex-col items-center justify-center w-full p-4 rounded-lg border-l-1 transition-transform transform hover:scale-105 "
+              data-aos="fade-up"
+              >
             {/* React Slick Slider */}
             <Slider
               {...sliderSettings}
@@ -140,12 +149,15 @@ export default function DisplayProduct({ onUpdateHandle, cartHandle, query }) {
             <h2 className="text-xl text-[15px] text-[#171717] font-medium">
               {item.name}
             </h2>
-            <p className="text-lg  font-semibold my-[8px] text-[#FF4545]">
-              RS: {item.price}
+            <div className="flex w-full items-center justify-center gap-2">
+            <p className="text-sm line-through text-gray-400 font-thin ">{item.oldPrice}</p>
+            <p className="text-md  font-normal  my-[8px] text-[#33D286]">
+               {item.price}
             </p>
+            </div>
             <button
               onClick={() => cartHandle(item)}
-              className="mt-2 px-4 py-2 border-[0.5px] border-[#212121] text-[#212121] font-light rounded transform transition-transform transition-colors duration-300 ease-in-out hover:text-white hover:border-transparent hover:bg-red-500">
+              className="mt-2 px-4 py-2 border-[0.5px] border-[#212121] text-[#212121] font-light rounded-md transform transition-transform transition-colors duration-300 ease-in-out hover:text-white hover:border-transparent hover:bg-red-500">
               ADD TO CART
             </button>
 
