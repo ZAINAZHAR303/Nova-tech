@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 
 import { AddCircleOutlined, LogoutOutlined } from "@mui/icons-material";
 import Loader from "@/components/loader/Loader";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const router = useRouter();
@@ -55,6 +56,7 @@ export default function Home() {
         onUpdateHandle={onUpdateHandle} 
         // cartHandle={cartHandle}
         query={query} />
+        <Footer />
 
       {addpro && <AddProduct onClose={() => setAddPro(false)} />}
     </div>
