@@ -15,9 +15,12 @@ function PlaceOrder() {
     const storedTotal = localStorage.getItem("totalPrice") || "0";
     setTotal(JSON.parse(storedTotal));
 
-    const storedCartItems = localStorage.getItem("cartItems");
+    const storedCartItems = localStorage.getItem("cart");
+    console.log("the cart items in place order ",storedCartItems);
+    
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
+
     }
   }, []);
 
@@ -29,7 +32,8 @@ function PlaceOrder() {
           return `Item ${index + 1}:\n` +
             `Name: ${item.name || "N/A"}\n` +
             `Price: ${item.price || "N/A"}\n` +
-            `Image: ${item.image1url || "N/A"}\n`;
+            `Image: ${item.image1url || "N/A"}\n`+
+            `Quantity: ${item.quantity || "N/A"}\n` ;
         })
         .join("\n");
       setConcatenatedString(formattedString);
@@ -92,8 +96,10 @@ function PlaceOrder() {
             <div className="flex flex-col ml-4 gap-2">
               <h1 className="text-[20px] font-semibold">{item.name}</h1>
               <h1 className="text-[15px] font-semibold text-[#FF4545]">
-                {item.price} RS.
+                {item.price} RS.<br></br>
+                
               </h1>
+              <h3>Quantity:{item.quantity}</h3>
             </div>
           </div>
         ))}
