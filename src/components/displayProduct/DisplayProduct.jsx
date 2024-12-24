@@ -11,7 +11,7 @@ import Loader from "../loader/Loader";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import CartProducts from "../CartProducts";
-
+import { FaCartPlus } from 'react-icons/fa';
 
 export default function DisplayProduct({ onUpdateHandle, query }) {
   const [products, setProducts] = useState([]);
@@ -115,13 +115,13 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
   };
 
   return (
-    <div className="grid grid-col-1 md:grid-cols-3 bg-white  xl:grid-cols-4  items-center justify-center mt-[20px]">
+    <div className="grid grid-col-1 md:grid-cols-3 bg-white place-items-center  xl:grid-cols-4 w-full items-center justify-center mt-[20px]">
       {loadings? (<Loader />):( products
         .filter((item) => item.name.toLowerCase().includes(query))
         .map((item) => (
           <div
             key={item.id}
-            className=" flex flex-col items-center justify-center w-full p-4 rounded-lg border-l-1 transition-transform transform hover:scale-105 "
+            className=" flex flex-col items-center justify-center mb-8 w-[270px]  p-6 bg-gradient-to-br from-[#F6F6F6] to-[#FFFFFF] rounded-xl shadow-xl transform transition-all duration-300 hover:scale-105"
               data-aos="fade-up"
               >
             {/* React Slick Slider */}
@@ -172,24 +172,31 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
               </div>
             </Slider>
 
-            {/* Product Details */}
-            <p className="text-sm text-gray-700 text-[13px] my-[10px]">
-              {item.description}
-            </p>
-            <h2 className="text-xl text-[15px] text-[#171717] font-medium">
-              {item.name}
-            </h2>
-            <div className="flex w-full items-center justify-center gap-2">
-            <p className="text-sm line-through text-gray-400 font-thin ">{item.oldPrice}</p>
-            <p className="text-md  font-normal  my-[8px] text-[#33D286]">
-               {item.price}
-            </p>
-            </div>
-            <button
-              onClick={() => cartHandle(item)}
-              className="mt-2 px-4 py-2 border-[0.5px] border-[#212121] text-[#212121] font-light rounded-md transform transition-transform transition-colors duration-300 ease-in-out hover:text-white hover:border-transparent hover:bg-red-500">
-              ADD TO CART
-            </button>
+            
+  <p className="text-sm  text-gray-600 my-2 cursor-pointer hover:text-gray-800 transition-colors duration-300 ease-in-out">
+    {item.description}
+  </p>
+
+  <h2 className="text-[1rem] font-semibold cursor-pointer  text-[#2A2A2A] mb-3 transition-colors duration-300 ease-in-out hover:text-[#FF6347]">
+    {item.name}
+  </h2>
+
+  <div className="flex items-center justify-center gap-4">
+    <p className="text-sm cursor-pointer text-gray-500 line-through font-light transition-all duration-300 ease-in-out hover:text-gray-700">
+      Rs.{item.oldPrice}.00
+    </p>
+    <p className="text-[1rem]  cursor-pointer text-black transition-all duration-300 ease-in-out hover:text-[#218838]">
+     Rs.{item.price}.00
+    </p>
+  </div>
+
+  <button
+    onClick={() => cartHandle(item)}
+    className="mt-6 w-full py-3 px-6 bg-gradient-to-r from-[#FF6347] to-[#FF4500] text-white font-medium rounded-lg shadow-md transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-r hover:from-[#FF4500] hover:to-[#FF6347] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF4500] flex items-center justify-center gap-2">
+    <FaCartPlus className="text-xl" />
+    ADD TO CART
+  </button>
+
 
             {/* Delete Button */}
             {Loginitem ? (
