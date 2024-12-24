@@ -67,10 +67,10 @@ function PlaceOrder() {
     try {
       // Sending the customer and order data to EmailJS
       const response = await emailjs.send(
-        "service_fx6cqwa",
-        "template_uilhudq",
-        customerDetails,
-        "gAXpbzydyb4oTm53K"
+        "service_p3eepms", // Updated Service ID
+      "template_5pn93fy", // Updated Template ID
+      customerDetails,
+      "bBZYu4MvGwM85OMMU"
       );
       console.log("Email sent successfully", response);
       alert("Order confirmation sent!");
