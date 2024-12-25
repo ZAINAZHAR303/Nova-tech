@@ -14,7 +14,7 @@ const Navbar = ({ setquery }) => {
   const [showSearch, setShowSearch] = useState(false);
   const [loginFun, setLoginFun] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const[cartAmount,setCartAmount] = useState("");
+  const [cartAmount, setCartAmount] = useState("");
   // Update `isMobileView` based on window width
   useEffect(() => {
     const handleResize = () => {
@@ -34,15 +34,18 @@ const Navbar = ({ setquery }) => {
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart")) || []; // Retrieve cart data or an empty array
- setCartAmount (cart.length);
-  },[]);
+    setCartAmount(cart.length);
+  }, []);
   return (
     <>
       <nav className="flex justify-between relative items-center p-4 w-full my-4 bg-white">
         {!showSearch || !isMobileView ? (
-          <h3 className="text-2xl font-bold text-orange-400 md:block">
-            NOVATECH
-          </h3>
+          <div className="flex flex-row-reverse items-center gap ">
+            {/* <h3 className="text-2xl font-bold text-black md:block">
+              NOVATECH
+            </h3> */}
+            <img className="h-[40px] w-[40px] border " src="logo.png" alt="lgog" />
+          </div>
         ) : null}
         {showSearch || !isMobileView ? (
           <div className="md:absolute md:top-[50%] md:left-[50%] md:translate-x-[-50%] md:translate-y-[-50%] md:w-[400px]">
@@ -60,15 +63,19 @@ const Navbar = ({ setquery }) => {
             onClick={() => setShowSearch(!showSearch)}
           />
           <div className=" relative ">
-          <LocalMallOutlined onClick={() => setShowCart(true)} />
-          <div className="h-4 w-4 bg-[#33D286] rounded-full flex justify-center items-center absolute -top-1 left-3">
-            <p className="text-white text-xs font-semibold ">{cartAmount}</p>
+            <LocalMallOutlined onClick={() => setShowCart(true)} />
+            <div className="h-4 w-4 bg-[#33D286] rounded-full flex justify-center items-center absolute -top-1 left-3">
+              <p className="text-white text-xs font-semibold ">{cartAmount}</p>
 
+            </div>
           </div>
-          </div>
+          {!showSearch || !isMobileView ? (
+            <>
           <AccountCircleOutlined onClick={() => setLoginFun(!loginFun)} />
           <ViewWeek className="rotate-90" />
-          
+          </>
+          ):null
+        }
 
         </div>
       </nav>

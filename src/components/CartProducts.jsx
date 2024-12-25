@@ -1,4 +1,4 @@
-import { CloseOutlined, DeleteOutlined } from "@mui/icons-material";
+import { AddCircle, CloseOutlined, DeleteOutlined, RemoveCircle } from "@mui/icons-material";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -84,34 +84,39 @@ const CartProducts = ({ onClose }) => {
         {cartitems.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between relative border-[1px] rounded-lg   p-4 mb-4">
-            <div className="h-[80px]  flex items-center  justify-center">
-              <img
-                src={item.image1url}
-                alt={item.name}
-                className="h-[80px] w-[80px]"
-              />
-              <div className="flex flex-col ml-4 gap-2  ">
+            className="flex flex-col items-center justify-between relative border-[1px] rounded-lg   p-4 mb-4">
+            <div className="h-[80px]  flex items-center  w-full  ">
+              <div>
+                <img
+                  src={item.image1url}
+                  alt={item.name}
+                  className="h-[80px] w-[80px]"
+                />
+              </div>
+              <div className="flex flex-col ml-4 w-[50%]   ">
                 <h1 className="text-[15px] font-medium ">{item.name}</h1>
                 <h1 className="text-[15px]  font-medium text-[#FF4545]">
                   {item.price} RS.
                 </h1>
+                <div className="flex items-center justify-between w-full mt-2 pr-4 ">
+
+                  <AddCircle onClick={() => quantityAddHandler(item)} className="w-[20px] h-[20px] "
+                    
+                  />
+                  <h1 className="font-light">
+                    {item.quantity}
+                  </h1>
+                  <RemoveCircle onClick={() => quantityDecrementHandler(item)} className="w-[20px] h-[20px] "
+                    
+                  />
+
+                </div>
+
               </div>
               <DeleteOutlined
                 className="cursor-pointer absolute  right-3"
                 onClick={() => handleDeleteItem(item.id)} // Pass item id to handleDeleteItem
               />
-
-            </div>
-            <div className="d-flex">
-              
-              <button onClick={() => quantityAddHandler(item)} className="w-full h-[20px] bg-[#212121] text-white font-medium mt-[10px]">
-                +
-              </button>
-              {item.quantity}
-              <button onClick={() => quantityDecrementHandler(item)} className="w-full h-[ 0px] bg-[#212121] text-white font-medium mt-[10px]">
-                -
-              </button>
 
             </div>
 
