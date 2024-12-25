@@ -3,7 +3,7 @@ import React from "react";
 const ShopGrid = () => {
   return (
     <div className="relative w-screen h-screen mb-20 overflow-hidden">
-  {/* Video Background */}
+ 
   <video
     src="demo.mp4"
     autoPlay
@@ -13,10 +13,10 @@ const ShopGrid = () => {
     className="absolute inset-0 w-full h-full object-cover"
   ></video>
 
-  {/* Gradient Overlay */}
+ 
   <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60"></div>
 
-  {/* Animated Text */}
+  
   <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-4">
   <h1 className="text-4xl md:text-6xl font-bold animate-fade-in">
     Welcome to Nova Tech
