@@ -8,16 +8,42 @@ const CartProducts = ({ onClose }) => {
   const modelref = useRef();
   const router = useRouter();
 
+  const quantityAddHandler = (item) => {
+    const updatedCart = cartitems.map((cartItem) =>
+      cartItem.id === item.id
+        ? { ...cartItem, quantity: cartItem.quantity + 1 } // Increment quantity
+        : cartItem
+    );
+    setCartItems(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
+  const quantityDecrementHandler = (item) => {
+    const updatedCart = cartitems.map((cartItem) =>
+      cartItem.id === item.id
+        ? {
+          ...cartItem,
+          quantity: cartItem.quantity > 1 ? cartItem.quantity - 1 : 1, // Ensure quantity does not go below 1
+        }
+        : cartItem
+    );
+    setCartItems(updatedCart);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
+
   useEffect(() => {
     const storedItem = JSON.parse(localStorage.getItem("cart"));
     if (storedItem) {
       setCartItems(storedItem);
+      console.log("the item quantity ", storedItem);
+
     }
   }, []);
 
   useEffect(() => {
     const newTotalPrice = cartitems.reduce(
-      (sum, item) => sum + parseFloat(item.price),
+      (sum, item) => sum + parseFloat(item.price * item.quantity),
       0
     );
     setTotalPrice(newTotalPrice);
@@ -31,16 +57,16 @@ const CartProducts = ({ onClose }) => {
   };
 
   const handleDeleteItem = (itemId) => {
-    
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const updatedCart = cart.filter((item) => item.id !== itemId); // Exclude the item with the matching ID
-      localStorage.setItem("cart", JSON.stringify(updatedCart));
-      setCartItems(updatedCart);
 
-    }
-   
-    
-  
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const updatedCart = cart.filter((item) => item.id !== itemId); // Exclude the item with the matching ID
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCartItems(updatedCart);
+
+  }
+
+
+
 
   return (
     <div
@@ -75,23 +101,45 @@ const CartProducts = ({ onClose }) => {
                 className="cursor-pointer absolute  right-3"
                 onClick={() => handleDeleteItem(item.id)} // Pass item id to handleDeleteItem
               />
+
             </div>
+            <div className="d-flex">
+              
+              <button onClick={() => quantityAddHandler(item)} className="w-full h-[20px] bg-[#212121] text-white font-medium mt-[10px]">
+                +
+              </button>
+              {item.quantity}
+              <button onClick={() => quantityDecrementHandler(item)} className="w-full h-[ 0px] bg-[#212121] text-white font-medium mt-[10px]">
+                -
+              </button>
+
+            </div>
+
+
           </div>
+
         ))}
         <div className="mt-12 flex items-center justify-between">
           <h1 className="text-[20px] font-bold ">Subtotal</h1>
           <h2 className="text-[20px] font-bold">{totalPrice.toFixed(1)} RS.</h2>
         </div>
-        <Link
-          href={{
-            pathname: "/placeOrder",
-          }}>
-          <div>
-            <button className="w-full h-[40px] bg-[#212121] text-white font-medium mt-[20px] ">
-              Checkout
-            </button>
-          </div>
-        </Link>
+        {cartitems.length !== 0 ?
+          <>
+            <Link
+              href={{
+                pathname: "/placeOrder",
+              }}>
+              <div >
+
+                <button className="w-full h-[40px] bg-[#212121] text-white font-medium mt-[20px] ">
+                  Checkout
+                </button>
+              </div>
+            </Link></>
+          : <h1 className="mt-12 text-center text-[19px] font-medium text-[#FF4545] bg-[#f4f4f4] px-4 py-2 rounded-md shadow-sm">
+            Please add a product checkout
+          </h1>
+        }
       </div>
     </div>
   );

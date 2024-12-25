@@ -39,13 +39,33 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
   };
   // State to hold the fetched products
 
-  const cartHandle = (item) => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push(item); // Add the new item to the cart
-    localStorage.setItem("cart", JSON.stringify(cart))
-    setShowCart(true);
+  // const cartHandle = (item) => {
+  //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+  //   cart.push(item); // Add the new item to the cart
+  //   localStorage.setItem("cart", JSON.stringify(cart))
+  //   setShowCart(true);
 
-  };
+  // };
+  const cartHandle = (item) => {
+   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  
+  const existingItemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
+
+  if (existingItemIndex !== -1) {
+    // If the item already exists, increase its quantity
+    cart[existingItemIndex].quantity += 1;
+    console.log("Item quantity increased:", cart[existingItemIndex].quantity);
+  } else {
+    cart.push({ ...item, quantity: 1 });
+    console.log("New item added to the cart with quantity 1.");
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  setShowCart(true); // Show the cart
+};
+
+  
   const getProducts = async () => {
     
     try {
