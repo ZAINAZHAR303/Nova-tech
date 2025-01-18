@@ -42,7 +42,7 @@ const Footer = () => {
                 <FaWhatsapp />
               </a>
               <a
-                href="https://www.instagram.com/direct/t/17842654239186788"
+                href="https://www.instagram.com/novatech.9?igsh=MXIyeGx0aWczZDR5dA%3D%3D&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-pink-500 text-2xl hover:opacity-80"

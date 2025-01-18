@@ -76,7 +76,7 @@ const CartProducts = ({ onClose }) => {
       <div className="w-[320px] h-screen  p-4 overflow-y-scroll bg-white">
         <CloseOutlined
           onClick={onClose}
-          className=" absolute top-8 text-[40px] right-8"
+          className=" absolute top-8 text-[#2E2E2E] text-[40px] right-8"
         />
         <h1 className="text-[20px] font-semibold text-[#2E2E2E]  my-[50px] ">
           Shopping Cart
@@ -94,19 +94,19 @@ const CartProducts = ({ onClose }) => {
                 />
               </div>
               <div className="flex flex-col ml-4 w-[50%]   ">
-                <h1 className="text-[15px] font-medium ">{item.name}</h1>
+                <h1 className="text-[15px] text-[#2E2E2E] font-medium ">{item.name}</h1>
                 <h1 className="text-[15px]  font-medium text-[#FF4545]">
                   {item.price} RS.
                 </h1>
                 <div className="flex items-center justify-between w-full mt-2 pr-4 ">
 
-                  <AddCircle onClick={() => quantityAddHandler(item)} className="w-[20px] h-[20px] "
+                  <AddCircle onClick={() => quantityAddHandler(item)} className="w-[20px] text-[#2E2E2E] h-[20px] "
                     
                   />
                   <h1 className="font-light">
                     {item.quantity}
                   </h1>
-                  <RemoveCircle onClick={() => quantityDecrementHandler(item)} className="w-[20px] h-[20px] "
+                  <RemoveCircle onClick={() => quantityDecrementHandler(item)} className="w-[20px] text-[#2E2E2E] h-[20px] "
                     
                   />
 
@@ -114,7 +114,7 @@ const CartProducts = ({ onClose }) => {
 
               </div>
               <DeleteOutlined
-                className="cursor-pointer absolute  right-3"
+                className="cursor-pointer text-[#2E2E2E] absolute  right-3"
                 onClick={() => handleDeleteItem(item.id)} // Pass item id to handleDeleteItem
               />
 
@@ -125,8 +125,8 @@ const CartProducts = ({ onClose }) => {
 
         ))}
         <div className="mt-12 flex items-center justify-between">
-          <h1 className="text-[20px] font-bold ">Subtotal</h1>
-          <h2 className="text-[20px] font-bold">{totalPrice.toFixed(1)} RS.</h2>
+          <h1 className="text-[20px] font-bold text-[#2E2E2E] ">Subtotal</h1>
+          <h2 className="text-[20px] font-bold text-[#2E2E2E]">{totalPrice.toFixed(1)} RS.</h2>
         </div>
         {cartitems.length !== 0 ?
           <>

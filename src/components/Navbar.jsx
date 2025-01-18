@@ -59,11 +59,11 @@ const Navbar = ({ setquery }) => {
         ) : null}
         <div className="flex gap-4">
           <Search
-            className="md:hidden"
+            className="md:hidden text-[#2E2E2E]"
             onClick={() => setShowSearch(!showSearch)}
           />
           <div className=" relative ">
-            <LocalMallOutlined onClick={() => setShowCart(true)} />
+            <LocalMallOutlined className="text-[#2E2E2E]" onClick={() => setShowCart(true)} />
             <div className="h-4 w-4 bg-[#33D286] rounded-full flex justify-center items-center absolute -top-1 left-3">
               <p className="text-white text-xs font-semibold ">{cartAmount}</p>
 
@@ -71,8 +71,8 @@ const Navbar = ({ setquery }) => {
           </div>
           {!showSearch || !isMobileView ? (
             <>
-          <AccountCircleOutlined onClick={() => setLoginFun(!loginFun)} />
-          <ViewWeek className="rotate-90" />
+          <AccountCircleOutlined className="text-[#2E2E2E]" onClick={() => setLoginFun(!loginFun)} />
+          <ViewWeek className="rotate-90 text-[#2E2E2E]" />
           </>
           ):null
         }
