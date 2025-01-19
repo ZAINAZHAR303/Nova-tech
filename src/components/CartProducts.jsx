@@ -103,7 +103,7 @@ const CartProducts = ({ onClose }) => {
                   <AddCircle onClick={() => quantityAddHandler(item)} className="w-[20px] text-[#2E2E2E] h-[20px] "
                     
                   />
-                  <h1 className="font-light">
+                  <h1 className="font-light text-[#2E2E2E]">
                     {item.quantity}
                   </h1>
                   <RemoveCircle onClick={() => quantityDecrementHandler(item)} className="w-[20px] text-[#2E2E2E] h-[20px] "
