@@ -41,33 +41,33 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
 
   // const cartHandle = (item) => {
   //   const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    
+
   //   cart.push(item); // Add the new item to the cart
   //   localStorage.setItem("cart", JSON.stringify(cart))
   //   setShowCart(true);
 
   // };
   const cartHandle = (item) => {
-   const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  
-  const existingItemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
 
-  if (existingItemIndex !== -1) {
-    // If the item already exists, increase its quantity
-    cart[existingItemIndex].quantity += 1;
-    console.log("Item quantity increased:", cart[existingItemIndex].quantity);
-  } else {
-    cart.push({ ...item, quantity: 1 });
-    console.log("New item added to the cart with quantity 1.");
-  }
-  localStorage.setItem("cart", JSON.stringify(cart));
-  setShowCart(true); // Show the cart
-};
+    const existingItemIndex = cart.findIndex((cartItem) => cartItem.id === item.id);
 
-  
+    if (existingItemIndex !== -1) {
+      // If the item already exists, increase its quantity
+      cart[existingItemIndex].quantity += 1;
+      console.log("Item quantity increased:", cart[existingItemIndex].quantity);
+    } else {
+      cart.push({ ...item, quantity: 1 });
+      console.log("New item added to the cart with quantity 1.");
+    }
+    localStorage.setItem("cart", JSON.stringify(cart));
+    setShowCart(true); // Show the cart
+  };
+
+
   const getProducts = async () => {
-    
+
     try {
       setLoadings(true); // Show loading spinner
       const collectionRef = collection(db, "products");
@@ -113,21 +113,32 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
     slidesToScroll: 1,
     arrows: true,
   };
+  const sentProduct = (item) => {
+    console.log("Item clicked in the new page:", item);
+    localStorage.setItem("selectedProduct", JSON.stringify(item));
+    window.location.href = `/item?id=${item.id}&key=6789`;
+  };
+  
 
   return (
     <div className="grid grid-col-1 md:grid-cols-3 bg-white place-items-center  xl:grid-cols-4 w-full items-center justify-center mt-[20px]">
-      {loadings? (<Loader />):( products
+      {loadings ? (
+         <div className="fixed inset-0 flex justify-center items-center bg-white bg-opacity-50 z-50">
+         <Loader />
+       </div>
+      ) : (products
         .filter((item) => item.name.toLowerCase().includes(query))
         .map((item) => (
           <div
             key={item.id}
             className=" flex flex-col items-center justify-center mb-8 w-[270px]  p-6 bg-gradient-to-br from-[#F6F6F6] to-[#FFFFFF] rounded-xl shadow-xl transform transition-all duration-300 hover:scale-105"
-              data-aos="fade-up"
-              >
+            data-aos="fade-up"
+          >
             {/* React Slick Slider */}
             <Slider
               {...sliderSettings}
               className="w-[209px]  mb-4 flex items-center justify-center">
+              <button onClick={()=>sentProduct(item)}>
               <div
                 className="custom-div image-container"
                 onMouseMove={handleMouseMove}
@@ -138,10 +149,11 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
                   alt="Product Image 1"
                   style={{
                     transformOrigin: `${position.x}% ${position.y}%`,
-                    
+
                   }}
                 />
               </div>
+              </button>
               <div
                 className="custom-div image-container"
                 onMouseMove={handleMouseMove}
@@ -172,30 +184,30 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
               </div>
             </Slider>
 
-            
-  <p className="text-sm  text-gray-600 my-2 cursor-pointer hover:text-gray-800 transition-colors duration-300 ease-in-out">
-    {item.description}
-  </p>
 
-  <h2 className="text-[1rem] font-semibold cursor-pointer  text-[#2A2A2A] mb-3 transition-colors duration-300 ease-in-out hover:text-[#FF6347]">
-    {item.name}
-  </h2>
+            <p className="text-sm  text-gray-600 my-2 cursor-pointer hover:text-gray-800 transition-colors duration-300 ease-in-out">
+              {item.description}
+            </p>
 
-  <div className="flex items-center justify-center gap-4">
-    <p className="text-sm cursor-pointer text-gray-500 line-through font-light transition-all duration-300 ease-in-out hover:text-gray-700">
-      Rs.{item.oldPrice}.00
-    </p>
-    <p className="text-[1rem]  cursor-pointer text-black transition-all duration-300 ease-in-out hover:text-[#218838]">
-     Rs.{item.price}.00
-    </p>
-  </div>
+            <h2 className="text-[1rem] font-semibold cursor-pointer  text-[#2A2A2A] mb-3 transition-colors duration-300 ease-in-out hover:text-[#FF6347]">
+              {item.name}
+            </h2>
 
-  <button
-    onClick={() => cartHandle(item)}
-    className="mt-6 w-full py-3 px-6 bg-gradient-to-r from-[#FF6347] to-[#FF4500] text-white font-medium rounded-lg shadow-md transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-r hover:from-[#FF4500] hover:to-[#FF6347] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF4500] flex items-center justify-center gap-2">
-    <FaCartPlus className="text-xl" />
-    ADD TO CART
-  </button>
+            <div className="flex items-center justify-center gap-4">
+              <p className="text-sm cursor-pointer text-gray-500 line-through font-light transition-all duration-300 ease-in-out hover:text-gray-700">
+                Rs.{item.oldPrice}.00
+              </p>
+              <p className="text-[1rem]  cursor-pointer text-black transition-all duration-300 ease-in-out hover:text-[#218838]">
+                Rs.{item.price}.00
+              </p>
+            </div>
+
+            <button
+              onClick={() => cartHandle(item)}
+              className="mt-6 w-full py-3 px-6 bg-gradient-to-r from-[#FF6347] to-[#FF4500] text-white font-medium rounded-lg shadow-md transform transition-all duration-300 ease-in-out hover:scale-105 hover:bg-gradient-to-r hover:from-[#FF4500] hover:to-[#FF6347] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF4500] flex items-center justify-center gap-2">
+              <FaCartPlus className="text-xl" />
+              ADD TO CART
+            </button>
 
 
             {/* Delete Button */}
@@ -218,7 +230,7 @@ export default function DisplayProduct({ onUpdateHandle, query }) {
           </div>
           // </div>
         )))}
-     {showCart && (
+      {showCart && (
         <div className="absolute right-0 top-16 z-10">
           <CartProducts onClose={() => setShowCart(false)} />
         </div>
