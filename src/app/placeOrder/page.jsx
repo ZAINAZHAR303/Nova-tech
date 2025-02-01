@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { Whatsapp } from "@/components/Whatsapp";
 
 function PlaceOrder() {
   const [total, setTotal] = useState("");
@@ -83,6 +84,7 @@ function PlaceOrder() {
 
   return (
     <div className="grid grid-cols-1 items-center h-screen lg:grid-cols-2 w-full">
+      <Whatsapp />
       <div className="flex items-center gap-4 flex-col lg:h-full lg:items-start lg:pt-[55px] lg:pl-[50px] rounded-lg w-full p-4 ">
         {cartitems.map((item) => (
           <div

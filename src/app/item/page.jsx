@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { FaCartPlus } from "react-icons/fa";
 import Loader from "@/components/loader/Loader";
 import CartProducts from "@/components/CartProducts";
+import { AiOutlineWhatsApp } from "react-icons/ai";
+import { Whatsapp } from "@/components/Whatsapp";
 
 export default function Page() {
   const [id, setId] = useState(null);
@@ -104,8 +106,10 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <div className="bg-white">
+     <Whatsapp />
       <Navbar />
+
 
       <div className="flex items-center justify-center min-h-screen bg-gray-100 p-6">
         {/* Card Container */}
@@ -152,8 +156,8 @@ export default function Page() {
 
             {/* Pricing Section */}
             <div className="mt-3">
-              <p className="text-lg text-gray-500 line-through">${storedItem.oldPrice}</p>
-              <p className="text-2xl font-semibold text-red-500">${storedItem.price}</p>
+              <p className="text-lg text-gray-500 line-through">RS.{storedItem.oldPrice}</p>
+              <p className="text-2xl font-semibold text-red-500">RS.{storedItem.price}</p>
             </div>
 
             {/* Add to Cart Button */}
