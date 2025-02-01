@@ -11,9 +11,9 @@ import { AiOutlineWhatsApp } from "react-icons/ai";
 
 
 import { AddCircleOutlined, LogoutOutlined } from "@mui/icons-material";
-import Loader from "@/components/loader/Loader";
+// import Loader from "@/components/loader/Loader";
 import Footer from "@/components/Footer";
-import Whatsapp from "@/components/whatsapp/whatsapp";
+// import Whatsapp from "@/components/whatsapp/whatsapp";
 
 export default function Home() {
   const router = useRouter();
